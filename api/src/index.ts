@@ -3,6 +3,7 @@ const greetings = async () => {
     console.log(typeof message)
     console.log(message)
     console.log("lol")
+    console.log("lol2")
 }
 
 greetings();
