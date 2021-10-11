@@ -1,0 +1,14 @@
+@dark: #222;
+@light: #fff;
+
+body{
+    background:@dark;
+    color:@light;
+
+    transition: all 0.25s ease;
+
+    &.dark{
+        background:@light;
+        color:@dark;
+    }
+}

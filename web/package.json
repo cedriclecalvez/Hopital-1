@@ -1,0 +1,24 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "Parcel typescript react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cedriclecalvez/Hopital-1.git"
+  },
+  "author": "Cédric Le Calvez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cedriclecalvez/Hopital-1/issues"
+  },
+  "homepage": "https://github.com/cedriclecalvez/Hopital-1#readme",
+  "devDependencies": {
+    "@parcel/transformer-less": "^2.0.0-rc.0",
+    "parcel": "^2.0.0-rc.0",
+    "typescript": "^4.4.3"
+  }
+}
