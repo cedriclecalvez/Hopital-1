@@ -7,11 +7,15 @@ const greetings = async () => {
 
 greetings();
 
+// Create toggleThemeColor
+
 const toggleThemeColor = document.getElementById("toggle-switch-color");
 
 toggleThemeColor.addEventListener("click", ()=>{
     console.log("toggle clicked");
-    document.body.classList.toggle('dark')
+    document.body.classList.toggle('light')
 });
 
 console.log("toggleThemeColor : ",toggleThemeColor);
+
+

@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Parcel typescript react",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cedriclecalvez/Hopital-1.git"
@@ -14,6 +11,9 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cedriclecalvez/Hopital-1/issues"
+  },
+  "scripts": {
+    "dev": "npx parcel ./src/index.html"
   },
   "homepage": "https://github.com/cedriclecalvez/Hopital-1#readme",
   "devDependencies": {
