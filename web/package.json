@@ -13,11 +13,14 @@
     "url": "https://github.com/cedriclecalvez/Hopital-1/issues"
   },
   "scripts": {
-    "dev": "npx parcel ./src/index.html"
+    "dev": "npx parcel ./src/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "homepage": "https://github.com/cedriclecalvez/Hopital-1#readme",
   "devDependencies": {
     "@parcel/transformer-less": "^2.0.0-rc.0",
+    "axios": "^0.23.0",
+    "dotenv": "^10.0.0",
     "parcel": "^2.0.0-rc.0",
     "typescript": "^4.4.3"
   }

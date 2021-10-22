@@ -4,10 +4,10 @@ import {Router, Request, Response} from 'express';
 
 const mainRouter:Router = Router();
 
-mainRouter.get('/', (req:Request,res:Response) => {
+mainRouter.get('/', (_:Request,res:Response) => {
    
-    console.log("req:",req );
-    console.log("res:",res );
+    //console.log("req:",req );
+    //console.log("res:",res );
     res.send("Voici la racine de mon api")
     
 })
