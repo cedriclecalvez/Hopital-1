@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Allergie {
+  idAllergie              Int                       @id
+  name                    String                    @db.VarChar(45)
+  Allergie_has_Medicament Allergie_has_Medicament[]
+  Patient_has_Allergie    Patient_has_Allergie[]
+}
+
+model Allergie_has_Medicament {
+  Allergie_idAllergie     Int
+  Medicament_idMedicament Int
+  Allergie                Allergie   @relation(fields: [Allergie_idAllergie], references: [idAllergie], onDelete: NoAction, onUpdate: NoAction, map: "fk_Allergie_has_Medicament_Allergie1")
+  Medicament              Medicament @relation(fields: [Medicament_idMedicament], references: [idMedicament], onDelete: NoAction, onUpdate: NoAction, map: "fk_Allergie_has_Medicament_Medicament1")
+
+  @@id([Allergie_idAllergie, Medicament_idMedicament])
+  @@index([Allergie_idAllergie], map: "fk_Allergie_has_Medicament_Allergie1_idx")
+  @@index([Medicament_idMedicament], map: "fk_Allergie_has_Medicament_Medicament1_idx")
+}
+
+model Consultaion {
+  idConsultaion             Int
+  date                      DateTime       @db.Date
+  Medecin_idMedecin         Int
+  Medecin_Service_idService Int
+  Patient_idPatient         Int
+  Medecin                   Medecin        @relation(fields: [Medecin_idMedecin, Medecin_Service_idService], references: [idMedecin, Service_idService], onDelete: NoAction, onUpdate: NoAction, map: "fk_Consultaion_Medecin1")
+  Patient                   Patient        @relation(fields: [Patient_idPatient], references: [idPatient], onDelete: NoAction, onUpdate: NoAction, map: "fk_Consultaion_Patient1")
+  Prescription              Prescription[]
+
+  @@id([idConsultaion, Medecin_idMedecin, Medecin_Service_idService, Patient_idPatient])
+  @@index([Medecin_idMedecin, Medecin_Service_idService], map: "fk_Consultaion_Medecin1_idx")
+  @@index([Patient_idPatient], map: "fk_Consultaion_Patient1_idx")
+}
+
+model Medecin {
+  idMedecin         Int
+  name              String        @db.VarChar(45)
+  speciality        String        @db.VarChar(45)
+  Service_idService Int
+  Service           Service       @relation(fields: [Service_idService], references: [idService], onDelete: NoAction, onUpdate: NoAction, map: "fk_Medecin_Service")
+  Consultaion       Consultaion[]
+
+  @@id([idMedecin, Service_idService])
+  @@index([Service_idService], map: "fk_Medecin_Service_idx")
+}
+
+model Medicament {
+  idMedicament                Int                           @id
+  name                        String                        @db.VarChar(45)
+  description                 String?                       @db.VarChar(45)
+  Allergie_has_Medicament     Allergie_has_Medicament[]
+  Prescription_has_Medicament Prescription_has_Medicament[]
+}
+
+model Patient {
+  idPatient            Int
+  name                 String                 @db.VarChar(45)
+  age                  Int
+  phone                Int?
+  address              String?                @db.VarChar(45)
+  email                String?                @db.VarChar(45)
+  Service_idService    Int
+  Service              Service                @relation(fields: [Service_idService], references: [idService], onDelete: NoAction, onUpdate: NoAction, map: "fk_Patient_Service1")
+  Consultaion          Consultaion[]
+  Patient_has_Allergie Patient_has_Allergie[]
+
+  @@id([idPatient, Service_idService])
+  @@index([Service_idService], map: "fk_Patient_Service1_idx")
+}
+
+model Patient_has_Allergie {
+  Patient_idPatient   Int
+  Allergie_idAllergie Int
+  Allergie            Allergie @relation(fields: [Allergie_idAllergie], references: [idAllergie], onDelete: NoAction, onUpdate: NoAction, map: "fk_Patient_has_Allergie_Allergie1")
+  Patient             Patient  @relation(fields: [Patient_idPatient], references: [idPatient], onDelete: NoAction, onUpdate: NoAction, map: "fk_Patient_has_Allergie_Patient1")
+
+  @@id([Patient_idPatient, Allergie_idAllergie])
+  @@index([Allergie_idAllergie], map: "fk_Patient_has_Allergie_Allergie1_idx")
+  @@index([Patient_idPatient], map: "fk_Patient_has_Allergie_Patient1_idx")
+}
+
+model Prescription {
+  idPrescription                        Int
+  date                                  DateTime                      @db.Date
+  description                           String?                       @db.VarChar(45)
+  quantity                              String?                       @db.VarChar(45)
+  Prescriptioncol                       Int?
+  Consultaion_idConsultaion             Int
+  Consultaion_Medecin_idMedecin         Int
+  Consultaion_Medecin_Service_idService Int
+  Consultaion_Patient_idPatient         Int
+  Consultaion                           Consultaion                   @relation(fields: [Consultaion_idConsultaion, Consultaion_Medecin_idMedecin, Consultaion_Medecin_Service_idService, Consultaion_Patient_idPatient], references: [idConsultaion, Medecin_idMedecin, Medecin_Service_idService, Patient_idPatient], onDelete: NoAction, onUpdate: NoAction, map: "fk_Prescription_Consultaion1")
+  Prescription_has_Medicament           Prescription_has_Medicament[]
+
+  @@id([idPrescription, Consultaion_idConsultaion, Consultaion_Medecin_idMedecin, Consultaion_Medecin_Service_idService, Consultaion_Patient_idPatient])
+  @@index([Consultaion_idConsultaion, Consultaion_Medecin_idMedecin, Consultaion_Medecin_Service_idService, Consultaion_Patient_idPatient], map: "fk_Prescription_Consultaion1_idx")
+}
+
+model Prescription_has_Medicament {
+  Prescription_idPrescription Int
+  Medicament_idMedicament     Int
+  Medicament                  Medicament   @relation(fields: [Medicament_idMedicament], references: [idMedicament], onDelete: NoAction, onUpdate: NoAction, map: "fk_Prescription_has_Medicament_Medicament1")
+  Prescription                Prescription @relation(fields: [Prescription_idPrescription], references: [idPrescription], onDelete: NoAction, onUpdate: NoAction, map: "fk_Prescription_has_Medicament_Prescription1")
+
+  @@id([Prescription_idPrescription, Medicament_idMedicament])
+  @@index([Medicament_idMedicament], map: "fk_Prescription_has_Medicament_Medicament1_idx")
+  @@index([Prescription_idPrescription], map: "fk_Prescription_has_Medicament_Prescription1_idx")
+}
+
+model Service {
+  idService    Int       @id
+  name         String    @db.VarChar(45)
+  localisation String    @db.VarChar(45)
+  description  String    @db.VarChar(45)
+  Medecin      Medecin[]
+  Patient      Patient[]
+}
