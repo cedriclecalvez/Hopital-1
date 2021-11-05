@@ -9,8 +9,8 @@
     "watch": "npx tsc -w",
     "dev": "nodemon ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db:migrate": "DATABASE_URL=\"process.env.DATABASE_URL\" npx prisma migrate dev",
-    "db:visualize": "DATABASE_URL=\"process.env.DATABASE_URL\" npx prisma studio dev"
+    "db:migrate": "DATABASE_URL=\"DATABASE_URL_PRISMA\" npx prisma migrate dev",
+    "db:visualize": "DATABASE_URL=\"DATABASE_URL_PRISMA\" npx prisma studio dev"
   },
   "repository": {
     "type": "git",
